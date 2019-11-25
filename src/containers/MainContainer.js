@@ -13,12 +13,12 @@ class MainContainer extends Component {
           <div className="row">
             <div className="col-8">
 
-              <StockContainer/>
+              <StockContainer companies = {this.props.companies} purchase = {this.props.purchase}/>
 
             </div>
             <div className="col-4">
 
-              <PortfolioContainer/>
+              <PortfolioContainer myPortfolio = {this.props.myPortfolio} sell = {this.props.sell}/>
 
             </div>
           </div>
