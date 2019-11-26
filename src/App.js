@@ -5,7 +5,9 @@ const API = "http://localhost:3000/stocks"
 class App extends Component {
 
 state={companies: [],
-myPortfolio: []}
+myPortfolio: [],
+sortType: "default",
+filterType: "default"}
 
 componentDidMount(){
   fetch(API)
@@ -28,11 +30,33 @@ const newPortfolio = this.state.myPortfolio.filter((company) => {
 this.setState({myPortfolio: [...newPortfolio]})
 }
 
+arrange = (type)=>{
+  this.setState({sortType : type})
+}
+
+companiesToPass = ()=>{
+  const comps = [...this.state.companies]
+  
+  if (this.state.sortType === "default"){
+    return this.state.companies
+  }
+  if (this.state.sortType === "Alphabetically"){
+    return comps.sort((a,b)=>{
+      return a.ticker.localeCompare(b.ticker)
+    })
+  }
+  if (this.state.sortType === "Price"){
+    return comps.sort((a,b)=>{
+      return (a.price - b.price)
+    })
+  }
+}
+
   render() {
     return (
       <div>
         <Header/>
-        <MainContainer companies = {this.state.companies} purchase = {this.purchase} sell = {this.sell} myPortfolio = {this.state.myPortfolio}/>
+        <MainContainer arrange = {this.arrange} companies = {this.companiesToPass} purchase = {this.purchase} sell = {this.sell} myPortfolio = {this.state.myPortfolio}/>
       </div>
     );
   }
